@@ -1,0 +1,32 @@
+# add this first to app.js require('dotenv').config();
+
+# command line config $ node -r dotenv/config your_script.js dotenv_config_path=/custom/path/to/your/env/vars
+
+#     const db = require('db')
+#       db.connect({
+#        host: process.env.DB_HOST,
+#        username: process.env.DB_USER,
+#        password: process.env.DB_PASS
+#       });
+
+
+
+
+# spotify API keys
+
+SPOTIFY_ID=<your spot key goes here no brackets and no quotes>
+SPOTIFY_ID=<your spot key goes here no brackets and no quotes>
+
+# Twitter API keys
+
+# Consumer Key (API Key)	aKwKYoKdTfafEUGVJFDznaNp8
+# Consumer Secret (API Secret)	YVkxRaDgGh77ZcOKMlrKdUPKdGdSAu2xI570lThdenR7FLsOuj
+
+# Access Token	895012266004946948-0xl4hFfuhtfaUcBaoHa9BBHvTirqMbX
+# Access Token Secret	3gFRmmVx2w7MUc1S0XtHtwag3GFZxusOJmlhw0ALH0R7P
+# Owner ID	895012266004946948
+
+TWITTER_CONSUMER_KEY=<your twitter con key>
+TWITTER_CONSUMER_SECRET=<your twitter con key>
+TWITTER_ACCESS_TOKEN_KEY=<your THIS KEY <<< >
+TWITTER_ACCESS_TOKEN_SECRET=<your THIS KEY <<< >
