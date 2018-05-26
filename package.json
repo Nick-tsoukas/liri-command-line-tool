@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "colors": "^1.3.0",
     "current-version": "^0.1.4",
     "dotenv": "^5.0.1",
     "file-system": "^2.2.2",
+    "inquirer": "^5.2.0",
     "request": "^2.87.0",
     "spotify": "^0.3.0",
     "spotify-web-api-node": "^3.1.1",
