@@ -31,29 +31,40 @@ var Twitter   = require("twitter"),
     inquirer  = require("inquirer")
     fs        = require("fs");
 
-// var params = {
-//     screen_name: 'NickTsoukas',
-//     count: 20
-//     }
-// constructor functions for twitter(client ie) and Spotify
-
 var client = new Twitter(keysFile.twitter);
+
+process.argv.forEach( (val,index) => {
+  console.log(`${index} : ${val}`);
+});
+
+
+
+
+
+
+
+
+// function tweetPost(newTweet){
+//   // takes "newTweet" and posts it to twitter account
+//   client.post('statuses/update', {status: `${newTweet}`},  function(error, tweet, response){
+//     if(error){
+//       console.log(error);
+//     }
+//     console.log(tweet.text);  // Tweet body.
+//   });
+// };
+
+
+
 // var spotify = new Spotify(keys.spotify);
 
 // console.log(spotify._credentials.id + " is the id");
 // console.log(spotify._credentials.secret + 'this is the secret!!!!');
 
-function tweetPost(newTweet){
-  // takes "newTweet" and posts it to twitter account
-  client.post('statuses/update', {status: `${newTweet}`},  function(error, tweet, response){
-    if(error){
-      console.log(error);
-    }
-    console.log(tweet.text);  // Tweet body.
-  });
-};
-
-
-
+// var params = {
+//     screen_name: 'NickTsoukas',
+//     count: 20
+//     }
+// constructor functions for twitter(client ie) and Spotify
 // calling the function will post tweets ... ...
 // tweetPost("Just testing program will stop posting ... ...")
