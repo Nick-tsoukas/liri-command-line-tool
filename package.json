@@ -4,18 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "twitter": "run-func db.js init"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cli-color": "^1.2.0",
     "colors": "^1.3.0",
     "current-version": "^0.1.4",
     "dotenv": "^5.0.1",
+    "figlet": "^1.2.0",
     "file-system": "^2.2.2",
     "inquirer": "^5.2.0",
     "request": "^2.87.0",
+    "run-func": "^1.0.2",
     "spotify": "^0.3.0",
     "spotify-web-api-node": "^3.1.1",
     "twitter": "^1.7.1",

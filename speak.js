@@ -1,4 +1,5 @@
 module.exports.tweet = function (newTweet) {
+  
   client.post('statuses/update', {status: `${newTweet}`},  function(error, tweet, response){
     if(error){
       console.log(error);
