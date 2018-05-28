@@ -11,7 +11,7 @@ const figlet = require('figlet'),
 
 var   fs = require('fs'),
       Twitter = require("twitter"),
-      Spotify = require('spotify-web-api-node'),
+      Spotify = require('node-spotify-api'),
       keysFile = require("./keys"),
       speak = require("./speak"),
       request = require("request"),
@@ -19,6 +19,33 @@ var   fs = require('fs'),
       fs = require("fs");
 
 var params = {screen_name: 'NickTsouaks'};
+
+function tweetIntro(){
+  figlet('tweets!', function(err, data) {
+    if (err) {
+      console.log('Something went wrong...');
+      console.dir(err);
+      return;
+    }
+    console.log(data);
+    console.log(error("=================================="))
+  });
+}
+function t(tweets){
+    tweets.forEach( (val,index) => {
+      if(index < 5) {
+        console.log(error(`${index + 1}:`), greenBright(val.text),"\n");
+      }
+      return;
+    });
+}
+function getTweets(){
+  client.get('statuses/user_timeline', params, function(error, tweets, response) {
+    if (!error) {
+      t(tweets);
+    }
+});
+}
 
 const template =
 `
@@ -51,50 +78,60 @@ figlet('HI + LADIES + GENTS !', function(err, data) {
 
 
 var client = new Twitter(keysFile.twitter);
+var spotify = new Spotify(keysFile.spotify);
 
-function buildTweets(){
-
-}
 
 process.argv.forEach((val, index) => {
 
   if (process.argv[2] == 'my-tweets' && index === 2) {
-    // console.log(val, " : Lets get tweets : index", index);
+    tweetIntro();
+    getTweets();
+  }
 
-    figlet('tweets!', function(err, data) {
-      if (err) {
-        console.log('Something went wrong...');
-        console.dir(err);
-        return;
-      }
-      console.log(data);
-      console.log(error("=================================="))
-    });
+  if (process.argv[2] == 'spotify-this-song' && index === 2) {
+    if(process.argv){
+      spotify.search({ type: 'track', query: `${process.argv[3]}`, limit:1 }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
+        var artist   = data.tracks.items[0].album.artists[0].name;
+        var songName = data.tracks.items[0].name;
+        var album    = data.tracks.items[0].album.name;
+        var songLink = data.tracks.items[0].album.external_urls.spotify;
 
-    function t(tweets){
-        tweets.forEach( (val,index) => {
-          if(index < 5) {
-            console.log(`${index + 1} `, "\n", greenBright(val.text), "\n");
-          }
-          return;
-        });
+      console.log(error(`1: ${artist}\n2: ${songName}\n3. ${songLink}\n4. ${album}`));
+      });
     }
-
-    client.get('statuses/user_timeline', params, function(error, tweets, response) {
-      if (!error) {
-        t(tweets);
-        // console.log(tweets[0]);
-      }
-});
-    // print 20 tweets from twitter api
-  }
-
-  // spot
-  if (process.argv[2] == 'play-song' && index === 2) {
-    console.log(process.argv[2]);
+    // spotify.search({ type: 'track', query: `${process.argv[3]}`, limit:1 }, function(err, data) {
+    //   if (err) {
+    //     return console.log('Error occurred: ' + err);
+    //   }
+    //   var artist   = data.tracks.items[0].album.artists[0].name;
+    //   var songName = data.tracks.items[0].name;
+    //   var album    = data.tracks.items[0].album.name;
+    //   var songLink = data.tracks.items[0].album.external_urls.spotify;
+    //
+    // console.log(error(`1: ${artist}\n2: ${songName}\n3. ${songLink}\n4. ${album}`));
+    // });
   }
 
 });
+
+
+// ============= spotify =====================
+
+// spotify.search({ type: 'track', query: 'All the Small Things', limit:1 }, function(err, data) {
+//   if (err) {
+//     return console.log('Error occurred: ' + err);
+//   }
+//   var artist   = data.tracks.items[0].album.artists[0].name;
+//   var songName = data.tracks.items[0].name;
+//   var album    = data.tracks.items[0].album.name;
+//   var songLink = data.tracks.items[0].album.external_urls.spotify;
+//
+//
+// console.log(error(`1: ${artist}\n2: ${songName}\n3. ${songLink}\n4. ${album}`));
+// });
 
 // function tweetPost(newTweet){
 //    takes "newTweet" and posts it to twitter account
