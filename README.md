@@ -6,6 +6,14 @@ A simple command line tool that lets you interact with the spotify,twitter, and 
 
 Clone into project and run npm install to get all Dependencies
 
+```
+for HTTPS : use ...
+git clone https://github.com/Nick-tsoukas/liri-command-line-tool.git
+
+for SSH : use ...
+git clone git@github.com:Nick-tsoukas/liri-command-line-tool.git
+```
+
 ### Prerequisites
 
 What things you need to install the software and how to install them
