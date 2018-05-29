@@ -21,8 +21,6 @@
     "node-spotify-api": "^1.0.7",
     "request": "^2.87.0",
     "run-func": "^1.0.2",
-    "spotify": "^0.3.0",
-    "spotify-web-api-node": "^3.1.1",
     "twitter": "^1.7.1",
     "update": "^0.7.4"
   }

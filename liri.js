@@ -21,6 +21,23 @@ var   fs = require('fs'),
 
 var params = {screen_name: 'NickTsouaks'};
 
+const template =
+`
+
+For twitter cli type node liri.js my-tweets
+
+  For Spotify cli type node liri.js play-song <song name>
+
+    For Movie Api cli type node liri.js movie-this <moive name>
+
+`
+// ====================Instuctions====================================
+    console.log(error('=================='), warn('Read Instructions'), error('========================'))
+    console.log(error('Nick and his Donkey were here! \n'));
+    console.log(greenBright(template));
+    console.log(error('====================================================================================================='));
+// ====================End_Of_Instructions============================
+
 function tweetIntro(){
   figlet('tweets!', function(err, data) {
     if (err) {
@@ -65,11 +82,13 @@ function getMovieData(movieName){
     url: 'http://www.omdbapi.com/',
     qs: { t: movieName, apikey: '685c6d4e' },
     headers:{'cache-control': 'no-cache' } };
+
   request(options, function (error, response, body) {
+
     if (error) throw new Error(error);
     var data = JSON.parse(body);
 
-    var language = data.language,
+    var language = data.Language,
         actors   = data.Actors,
         country  = data.Country,
         title    = data.Title,
@@ -78,31 +97,9 @@ function getMovieData(movieName){
         iRate    = data.Ratings[0].Value,
         tRate    = data.Ratings[1].Value;
 
-     console.log(`1:${title}\n2:${year}\n3:${iRate}\n4:${tRate}\n5:${country}\n6:${language}\n7:${plot}\n8:${actors}\n`);
-
+     console.log(`Movie Title:${title}\nYear:${year}\nRatings:${iRate}\nTom Ratings:${tRate}\nCountry:${country}\nLanguage:${language}\nShort Plot:${plot}\nActors:${actors}\n`);
   });
 }
-
-
-
-const template =
-`
-
-For twitter cli type node liri.js my-tweets
-
-  For Spotify cli type node liri.js play-song <song name>
-
-    For Movie Api cli type node liri.js movie-this <moive name>
-
-`
-
-
-// ====================Instuctions====================================
-    console.log(error('=================='), warn('Read Instructions'), error('========================'))
-    console.log(error('Nick and his Donkey were here! \n'));
-    console.log(greenBright(template));
-    console.log(error('====================================================================================================='));
-// ====================End_Of_Instructions============================
 
 greeting();
 
@@ -118,8 +115,10 @@ process.argv.forEach((val, index) => {
   }
 
   if (process.argv[2] == 'spotify-this-song' && index === 2) {
+    var stringArray = process.argv.slice(3);
+
     if(process.argv){
-      spotify.search({ type: 'track', query: `${process.argv[3]}`, limit:1 }, function(err, data) {
+      spotify.search({ type: 'track', query: `${stringArray.join(' ')}`, limit:1 }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
         }
@@ -127,7 +126,6 @@ process.argv.forEach((val, index) => {
         var songName = data.tracks.items[0].name;
         var album    = data.tracks.items[0].album.name;
         var songLink = data.tracks.items[0].album.external_urls.spotify;
-
       console.log(error(`1: ${artist}\n2: ${songName}\n3. ${songLink}\n4. ${album}`));
       });
     }
@@ -138,7 +136,8 @@ process.argv.forEach((val, index) => {
   }
 
   if (process.argv[2] == 'movie-this' && index === 2) {
-      getMovieData(process.argv[3]);
+      var movie  = process.argv.slice(3).join('+');
+      getMovieData(movie);
     }
 
 });
