@@ -1,6 +1,7 @@
                require("dotenv").config(); // config env first ...
                // ================================================
-
+//  movie-this
+//http://www.omdbapi.com/?i=tt3896198&apikey=685c6d4e
 const figlet = require('figlet'),
       clc    = require('cli-color'),
       notice = clc.blue,
@@ -46,6 +47,43 @@ function getTweets(){
     }
 });
 }
+function greeting(){
+  figlet('HI + LADIES + GENTS !', function(err, data) {
+    if (err) {
+      console.log('Something went wrong...');
+      console.dir(err);
+      return;
+    }
+    console.log(data);
+  });
+}
+
+
+function getMovieData(movieName){
+
+  var options = { method: 'GET',
+    url: 'http://www.omdbapi.com/',
+    qs: { t: movieName, apikey: '685c6d4e' },
+    headers:{'cache-control': 'no-cache' } };
+  request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+    var data = JSON.parse(body);
+
+    var language = data.language,
+        actors   = data.Actors,
+        country  = data.Country,
+        title    = data.Title,
+        plot     = data.Plot,
+        year     = data.Year,
+        iRate    = data.Ratings[0].Value,
+        tRate    = data.Ratings[1].Value;
+
+     console.log(`1:${title}\n2:${year}\n3:${iRate}\n4:${tRate}\n5:${country}\n6:${language}\n7:${plot}\n8:${actors}\n`);
+
+  });
+}
+
+
 
 const template =
 `
@@ -54,7 +92,7 @@ For twitter cli type node liri.js my-tweets
 
   For Spotify cli type node liri.js play-song <song name>
 
-    For Movie Api cli type node liri.js my-tweets
+    For Movie Api cli type node liri.js movie-this <moive name>
 
 `
 
@@ -66,16 +104,7 @@ For twitter cli type node liri.js my-tweets
     console.log(error('====================================================================================================='));
 // ====================End_Of_Instructions============================
 
-
-figlet('HI + LADIES + GENTS !', function(err, data) {
-  if (err) {
-    console.log('Something went wrong...');
-    console.dir(err);
-    return;
-  }
-  console.log(data);
-});
-
+greeting();
 
 var client = new Twitter(keysFile.twitter);
 var spotify = new Spotify(keysFile.spotify);
@@ -102,18 +131,15 @@ process.argv.forEach((val, index) => {
       console.log(error(`1: ${artist}\n2: ${songName}\n3. ${songLink}\n4. ${album}`));
       });
     }
-    // spotify.search({ type: 'track', query: `${process.argv[3]}`, limit:1 }, function(err, data) {
-    //   if (err) {
-    //     return console.log('Error occurred: ' + err);
-    //   }
-    //   var artist   = data.tracks.items[0].album.artists[0].name;
-    //   var songName = data.tracks.items[0].name;
-    //   var album    = data.tracks.items[0].album.name;
-    //   var songLink = data.tracks.items[0].album.external_urls.spotify;
-    //
-    // console.log(error(`1: ${artist}\n2: ${songName}\n3. ${songLink}\n4. ${album}`));
-    // });
+    else {
+      console.log('You did not provide a song name ... please try again if you want movie data')
+    }
+
   }
+
+  if (process.argv[2] == 'movie-this' && index === 2) {
+      getMovieData(process.argv[3]);
+    }
 
 });
 
